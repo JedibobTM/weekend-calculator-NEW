@@ -7,22 +7,29 @@ app.use(express.static('server/public'));
 
 // Global variable that will contain all of the
 // calculation objects:
-let calculations = []
+let calculations = [];
 
-
+let answer;
 // Here's a wonderful place to make some routes:
 
 // GET /calculations
 app.get('/calculations', (req, res) => {
   res.send("hello world");
+  res.send(maths());
 })
 
 // POST /calculations
 app.post('/calculations', (req, res) => {
   res.send('POST to the homepage');
   console.log(req.body);
+  let calculationStuff = req.body;
 })
-
+function maths() {
+  if (times) {
+    answer = numberOne * numberTwo;
+  }
+  console.log(answer)
+}
 
 // PLEASE DO NOT MODIFY ANY CODE BELOW THESE BEARS:
 // 🐻  🐻‍❄️  🧸  🐻  🐻‍❄️  🧸  🐻  🐻‍❄️  🧸  🐻  🐻‍❄️  🧸

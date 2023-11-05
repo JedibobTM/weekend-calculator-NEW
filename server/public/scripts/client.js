@@ -13,6 +13,10 @@ let dividedBy = document.getElementById('divide').value;
 function handleSubmit(event) {
     console.log('Handling Submit');
     event.preventDefault();
+
+    document.getElementById('first-number').value = '';
+    document.getElementById('second-number').value = '';
+
 }
 
 function buttonOnClick(event) {
@@ -21,12 +25,12 @@ function buttonOnClick(event) {
 }
 
 function getEquation(event) {
-    let numbers = {numberOne: numberOne, 
+    let numbers = { numberOne: numberOne, 
         numberTwo: numberTwo, 
         plus: plus, 
         minus: minus,
         times: times,
-        dividedBy: dividedBy}
+        dividedBy: dividedBy }
 
     axios({
         method: 'POST',
@@ -35,6 +39,7 @@ function getEquation(event) {
     })
 }
 
+getEquation();
 
 
 onReady()
