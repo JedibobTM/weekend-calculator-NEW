@@ -15,7 +15,7 @@ let answer;
 // GET /calculations
 app.get('/calculations', (req, res) => {
   res.send("hello world");
-  res.send(maths());
+  res.send(calculations);
 })
 
 // POST /calculations
@@ -24,12 +24,18 @@ app.post('/calculations', (req, res) => {
   console.log(req.body);
   let calculationStuff = req.body;
 })
-function maths() {
-  if (times) {
-    answer = numberOne * numberTwo;
-  }
-  console.log(answer)
+
+if (times) {
+  calculations.push(numberOne * numberTwo);
+} else if (dividedBy) {
+  calculations.push(numberOne / numberTwo);
+} else if (plus) {
+  calculations.push(numberOne + numberTwo);
+} else if (minus) {
+  calculations.push(numberOne - numberTwo);
 }
+console.log(calculations);
+
 
 // PLEASE DO NOT MODIFY ANY CODE BELOW THESE BEARS:
 // 🐻  🐻‍❄️  🧸  🐻  🐻‍❄️  🧸  🐻  🐻‍❄️  🧸  🐻  🐻‍❄️  🧸
