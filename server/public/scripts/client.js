@@ -1,45 +1,62 @@
 function onReady() {
     console.log("Hello World");
-
 }
+let globalOperator;
 
-let numberOne = document.getElementById('first-number').value;
-let numberTwo = document.getElementById('second-number').value;
-let plus = document.getElementById('add').value;
-let minus = document.getElementById('subtract').value;
-let times = document.getElementById('multiply').value;
-let dividedBy = document.getElementById('divide').value;
-
-function handleSubmit(event) {
-    console.log('Handling Submit');
-    event.preventDefault();
-
-    document.getElementById('first-number').value = '';
-    document.getElementById('second-number').value = '';
-
-}
-
-function buttonOnClick(event) {
-    console.log('Operator test');
-    event.preventDefault();
-}
-
-function getEquation(event) {
-    let numbers = { numberOne: numberOne, 
-        numberTwo: numberTwo, 
-        plus: plus, 
-        minus: minus,
-        times: times,
-        dividedBy: dividedBy }
+function getCalculations() {
+    console.log('getting operator');
 
     axios({
-        method: 'POST',
         url: '/calculations',
-        data: numbers
+        method: 'GET',
+    }).then((response) => {
+        console.log('response.data', response.data);
+        let calculations = response.data;
+        console.log(calculations, 'ARE THE CALCS');
+        render(calculations);
     })
 }
 
-getEquation();
+function setOperator(event, operator) {
+    event.preventDefault();
+    globalOperator = operator;
+}
 
 
+function handleSubmit(event) {
+    event.preventDefault();
+    console.log("handling submit");
+    let firstNumber = document.getElementById("first-number").value;
+    let secondNumber = document.getElementById("second-number").value;
+    axios ({
+        url: '/calculations',
+        method: 'POST',
+        data: { numOne: firstNumber, numTwo: secondNumber, operator: globalOperator }
+    }).then((response) => {
+        getCalculations();
+    })
+}
+
+function render(calculations) {
+    let resultHistory = document.getElementById('result-history');
+    console.log('resultHistory', resultHistory);
+    let recentAnswer = document.getElementById('recent-result');
+    console.log('recentAnswer', recentAnswer)
+    
+    let mostRecentResult = calculations[calculations.length - 1].result
+    recentAnswer.innerHTML = '';
+    recentAnswer.innerHTML += `
+        <h2>${mostRecentResult}</h2>
+    `
+    console.log('recentAnswer', recentAnswer)
+
+    resultHistory.innerHTML = '';
+    for (number of calculations) {
+        resultHistory.innerHTML += `
+            <li>${number.numOne} ${number.operator} ${number.numTwo} = ${number.result}</li>
+        `
+    }
+}
+
+getCalculations();
 onReady()

@@ -9,30 +9,50 @@ app.use(express.static('server/public'));
 // calculation objects:
 let calculations = [];
 
-let answer;
+let result;
 // Here's a wonderful place to make some routes:
 
 // GET /calculations
 app.get('/calculations', (req, res) => {
-  res.send("hello world");
+  console.log('GET /calculations received a request!');
+  console.log('req.body', req.body);
   res.send(calculations);
 })
 
 // POST /calculations
 app.post('/calculations', (req, res) => {
-  res.send('POST to the homepage');
-  console.log(req.body);
-  let calculationStuff = req.body;
+  let calculatorStuff = req.body;
+  console.log('calculatorStuff', calculatorStuff);
+  doMath(calculatorStuff);
+  res.sendStatus(201);
 })
 
-if (times) {
-  calculations.push(numberOne * numberTwo);
-} else if (dividedBy) {
-  calculations.push(numberOne / numberTwo);
-} else if (plus) {
-  calculations.push(numberOne + numberTwo);
-} else if (minus) {
-  calculations.push(numberOne - numberTwo);
+function doMath(calculationToSolve) {
+  let operator = calculationToSolve.operator;
+  let numOne = Number(calculationToSolve.numOne);
+  let numTwo = Number(calculationToSolve.numTwo);
+  let result;
+  switch (operator) {
+    case '+':
+      result = numOne + numTwo;
+      break;
+    case '-':
+      result = numOne - numTwo;
+      break;
+    case '*':
+      result = numOne * numTwo;
+      break;
+    case '/':
+      result = numOne / numTwo;
+      break;
+    default:
+      res.sendStatus(400)
+      break;
+  }
+  let calculation = { numOne: numOne, numTwo: numTwo, operator: operator, result: result };
+  calculations.push(calculation);
+
+  return result;
 }
 console.log(calculations);
 

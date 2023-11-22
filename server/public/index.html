@@ -11,20 +11,24 @@
 
     <form data-testid="calculator">
       <input id="first-number" placeholder="First Number">
-      <button id="add" onclick="buttonOnClick(event)"><strong>+</strong></button>
-      <button id="subtract" onclick="buttonOnClick(event)"><strong>-</strong></button>
-      <button id="multiply" onclick="buttonOnClick(event)"><strong>x</strong></button>
-      <button id="divide" onclick="buttonOnClick(event)"><strong>÷</strong></button>
+      <button id="add" onclick="setOperator(event, '+')"><strong>+</strong></button>
+      <button id="subtract" onclick="setOperator(event, '-')"><strong>-</strong></button>
+      <button id="multiply" onclick="setOperator(event, '*')"><strong>*</strong></button>
+      <button id="divide" onclick="setOperator(event, '/')"><strong>/</strong></button>
       <input id="second-number" placeholder="Second Number">
       <button id="equals" onclick="handleSubmit(event)"><strong>=</strong></button>
       <button id="clear" type="reset"><strong>C</strong></button>
     </form>
 
-    <section data-testid="recentResult">
+    <section id="recent-result" data-testid="recentResult">
+      
       <!-- The most recent calculation result goes here. -->
     </section>
 
     <section data-testid="resultHistory">
+      <ul id="result-history">
+
+      </ul>
       <!-- The list of calculation results goes here. -->
     </section>
   </body>
